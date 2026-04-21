@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Albion OS</title>
+<style>
+body, html {margin:0; padding:0; height:100%; font-family:Arial,sans-serif; overflow:hidden;}
+#desktop {background: linear-gradient(to bottom right, #1a1a1a, #333); width:100%; height:100%; position:relative; color:white;}
+#header {position:absolute; top:0; left:0; width:100%; height:40px; background:#111; line-height:40px; padding-left:10px; font-weight:bold; font-size:16px;}
+.icon {width:80px; height:80px; margin:10px; display:inline-block; text-align:center; cursor:pointer; border-radius:10px; font-size:14px; user-select:none; color:white; padding-top:50px; background-size:40px 40px; background-repeat:no-repeat; background-position:center 5px;}
+#icon-notepad {background-color:#f39c12; background-image:url('https://img.icons8.com/ios-filled/50/ffffff/notepad.png');}
+#icon-calculator {background-color:#27ae60; background-image:url('https://img.icons8.com/ios-filled/50/ffffff/calculator.png');}
+#icon-paint {background-color:#2980b9; background-image:url('https://img.icons8.com/ios-filled/50/ffffff/paint-palette.png');}
+#icon-tictactoe {background-color:#8e44ad; background-image:url('https://img.icons8.com/ios-filled/50/ffffff/tic-tac-toe.png');}
+#icon-settings {background-color:#c0392b; background-image:url('https://img.icons8.com/ios-filled/50/ffffff/settings.png');}
+.app {display:none; position:absolute; top:60px; left:60px; width:300px; height:300px; background:white; color:black; border:2px solid black; padding:0; border-radius:5px;}
+.app-header {background:#444; color:white; padding:5px; font-weight:bold; cursor:move; display:flex; justify-content:space-between; align-items:center;}
+.app-content {padding:10px;}
+.app-content textarea, .app-content input, .app-content select, .app-content button {width:100%; margin-bottom:10px; padding:5px;}
+#ticTacToeGrid {display:grid; grid-template-columns:repeat(3,60px); grid-template-rows:repeat(3,60px); gap:5px; justify-content:center; margin-top:10px;}
+#ticTacToeGrid div {width:60px; height:60px; background:#eee; display:flex; align-items:center; justify-content:center; font-size:32px; cursor:pointer;}
+#paintCanvas {border:1px solid #000; background:#fff; cursor:crosshair; touch-action:none;}
+.bg-option {width:60px; height:60px; margin:5px; display:inline-block; cursor:pointer; border-radius:5px;}
+</style>
+</head>
+<body>
+
+<div id="desktop">
+  <div id="header">Albion OS</div>
+  <div id="icon-notepad" class="icon" onclick="openApp('notepad')">Notepad</div>
+  <div id="icon-calculator" class="icon" onclick="openApp('calculator')">Calculator</div>
+  <div id="icon-paint" class="icon" onclick="openApp('paint')">Paint</div>
+  <div id="icon-tictactoe" class="icon" onclick="openApp('ticTacToe')">X & O</div>
+  <div id="icon-settings" class="icon" onclick="openApp('settings')">Settings</div>
+</div>
+
+<div id="apps">
+  <!-- Notepad -->
+  <div id="notepad" class="app">
+    <div class="app-header">Notepad <button onclick="closeApp('notepad')">X</button></div>
+    <div class="app-content"><textarea placeholder="Shkruaj këtu..." rows="10"></textarea></div>
+  </div>
+
+  <!-- Calculator -->
+  <div id="calculator" class="app">
+    <div class="app-header">Calculator <button onclick="closeApp('calculator')">X</button></div>
+    <div class="app-content">
+      <input type="text" id="calcInput" placeholder="Shembull: 5+3">
+      <button onclick="calculate()">Calculate</button>
+      <div id="calcResult" style="margin-top:10px;font-weight:bold;"></div>
+    </div>
+  </div>
+
+  <!-- Paint -->
+  <div id="paint" class="app">
+    <div class="app-header">Paint <button onclick="closeApp('paint')">X</button></div>
+    <div class="app-content">
+      <label>Zgjidh ngjyrën:</label>
+      <input type="color" id="paintColor" value="#000000">
+      <canvas id="paintCanvas" width="280" height="180"></canvas><br>
+      <button onclick="clearPaint()">Clear</button>
+    </div>
+  </div>
+
+  <!-- Tic-Tac-Toe -->
+  <div id="ticTacToe" class="app">
+    <div class="app-header">X & O <button onclick="closeApp('ticTacToe')">X</button></div>
+    <div class="app-content">
+      <div id="ticTacToeGrid"></div>
+      <button onclick="resetTicTacToe()">Reset</button>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div id="settings" class="app">
+    <div class="app-header">Settings <button onclick="closeApp('settings')">X</button></div>
+    <div class="app-content">
+      <div><strong>Version: 1.0</strong></div>
+      <div style="margin-top:10px;">Zgjidh Background:</div>
+      <div class="bg-option" style="background:#1abc9c;" onclick="changeBG('#1abc9c')"></div>
+      <div class="bg-option" style="background:#e67e22;" onclick="changeBG('#e67e22')"></div>
+      <div class="bg-option" style="background:#9b59b6;" onclick="changeBG('#9b59b6')"></div>
+      <div class="bg-option" style="background:#34495e;" onclick="changeBG('#34495e')"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* Open/Close apps */
+function openApp(id){document.getElementById(id).style.display='block';}
+function closeApp(id){document.getElementById(id).style.display='none';}
+
+/* Change desktop background */
+function changeBG(color){document.getElementById('desktop').style.background=color;}
+
+/* Calculator */
+function calculate(){const input=document.getElementById('calcInput').value;let result;try{result=eval(input);}catch{result='Error';}document.getElementById('calcResult').innerText=result;}
+
+/* Paint */
+const canvas=document.getElementById('paintCanvas');const ctx=canvas.getContext('2d');let painting=false; let currentColor=document.getElementById('paintColor').value;
+canvas.addEventListener('mousedown',()=>{painting=true;ctx.beginPath();});
+canvas.addEventListener('mouseup',()=>{painting=false;ctx.beginPath();});
+canvas.addEventListener('mouseleave',()=>{painting=false;ctx.beginPath();});
+canvas.addEventListener('mousemove',draw);
+canvas.addEventListener('touchstart',(e)=>{painting=true; const touch=e.touches[0]; const rect=canvas.getBoundingClientRect(); ctx.beginPath(); ctx.moveTo(touch.clientX-rect.left, touch.clientY-rect.top);});
+canvas.addEventListener('touchmove',(e)=>{e.preventDefault(); if(!painting) return; const touch=e.touches[0]; const rect=canvas.getBoundingClientRect(); ctx.lineTo(touch.clientX-rect.left, touch.clientY-rect.top); ctx.strokeStyle=currentColor; ctx.lineWidth=2; ctx.stroke(); ctx.beginPath(); ctx.moveTo(touch.clientX-rect.left, touch.clientY-rect.top);}, {passive:false});
+canvas.addEventListener('touchend',()=>{painting=false; ctx.beginPath();});
+document.getElementById('paintColor').addEventListener('change',(e)=>{currentColor=e.target.value;});
+function draw(e){if(!painting) return; const rect=canvas.getBoundingClientRect(); ctx.lineTo(e.clientX-rect.left,e.clientY-rect.top); ctx.strokeStyle=currentColor; ctx.lineWidth=2; ctx.stroke(); ctx.beginPath(); ctx.moveTo(e.clientX-rect.left,e.clientY-rect.top);}
+function clearPaint(){ctx.clearRect(0,0,canvas.width,canvas.height); ctx.beginPath();}
+
+/* Tic-Tac-Toe */
+let currentPlayer='X';let board=Array(9).fill('');const grid=document.getElementById('ticTacToeGrid');
+function renderTicTacToe(){grid.innerHTML='';board.forEach((cell,index)=>{const div=document.createElement('div');div.innerText=cell;div.addEventListener('click',()=>makeMove(index));grid.appendChild(div);});}
+function makeMove(index){if(board[index]===''){board[index]=currentPlayer;if(checkWin(currentPlayer)){alert(currentPlayer+' fitoi!');resetTicTacToe();return;}currentPlayer=currentPlayer==='X'?'O':'X';renderTicTacToe();}}
+function checkWin(player){const winPatterns=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];return winPatterns.some(pattern=>pattern.every(i=>board[i]===player));}
+function resetTicTacToe(){board=Array(9).fill('');currentPlayer='X';renderTicTacToe();}
+renderTicTacToe();
+
+/* Dragging apps */
+document.querySelectorAll('.app').forEach(win=>{
+  let isDragging=false; let offsetX=0; let offsetY=0;
+  const header=win.querySelector('.app-header');
+  header.addEventListener('mousedown',(e)=>{isDragging=true; offsetX=e.offsetX; offsetY=e.offsetY;});
+  document.addEventListener('mouseup',()=>{isDragging=false;});
+  document.addEventListener('mousemove',(e)=>{if(isDragging){win.style.left=(e.pageX-offsetX)+'px'; win.style.top=(e.pageY-offsetY)+'px';}});
+});
+</script>
+
+</body>
+</html>
