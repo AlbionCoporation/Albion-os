@@ -1,10 +1,113 @@
-Licences 
-Albion Coporation copyright©
-Do not disturbe in any way 
-All versions are from Albion Coportaion 
-The html version must be used in any copy or other Os
-Do not deploy it on any other space 
-Please report bugs to our website 
-Please report any crash
-Do not edit this Os
-The os is not Open Source
+ALBION CORPORATION SOFTWARE LICENSE AGREEMENT
+
+Copyright © 2026 Albion Corporation.
+All Rights Reserved.
+
+Product Name: Albion OS 5.0
+
+IMPORTANT NOTICE:
+
+By downloading, using, copying, accessing, storing, distributing, testing, reviewing, or interacting with Albion OS in any form, you acknowledge that you have read, understood, and agreed to the terms and conditions described in this license agreement.
+
+1. OWNERSHIP
+
+Albion OS and all related files, source code, assets, designs, interfaces, documentation, concepts, logos, names, and software components are the property of Albion Corporation unless otherwise stated.
+
+2. COPYRIGHT
+
+Albion OS is protected by copyright laws and international intellectual property regulations. Unauthorized copying, redistribution, or modification may violate applicable laws.
+
+3. PERMITTED USE
+
+Users may:
+
+- Download Albion OS.
+- Run Albion OS for personal use.
+- Test Albion OS.
+- Study the visible behavior of Albion OS.
+- Share links to official releases of Albion OS.
+
+4. RESTRICTIONS
+
+Users may NOT:
+
+- Claim ownership of Albion OS.
+- Remove Albion Corporation credits.
+- Misrepresent the origin of Albion OS.
+- Sell Albion OS as their own product.
+- Repackage Albion OS under another name without permission.
+- Remove copyright notices.
+- Create misleading copies that appear official.
+- Impersonate Albion Corporation.
+
+5. MODIFICATION
+
+Modification of Albion OS source code is not permitted unless explicit written permission has been granted by Albion Corporation.
+
+6. REDISTRIBUTION
+
+Redistribution of Albion OS files is prohibited without permission from Albion Corporation.
+
+Users should share official project links instead of re-uploading copies.
+
+7. OPEN SOURCE STATUS
+
+Albion OS is NOT Open Source.
+
+No rights are granted to modify, redistribute, sublicense, merge, or publish modified versions unless explicitly authorized.
+
+8. WARRANTY DISCLAIMER
+
+Albion OS is provided "AS IS" without warranties of any kind.
+
+Albion Corporation does not guarantee:
+
+- Error-free operation.
+- Compatibility with all devices.
+- Continuous availability.
+- Fitness for a specific purpose.
+
+9. LIMITATION OF LIABILITY
+
+Albion Corporation shall not be liable for any damages, losses, data corruption, hardware issues, software conflicts, or other consequences arising from the use of Albion OS.
+
+10. BUG REPORTING
+
+Users are encouraged to report bugs, crashes, visual issues, performance issues, or security concerns to Albion Corporation through official channels.
+
+11. TRADEMARKS
+
+The names "Albion OS" and "Albion Corporation" may not be used to promote derivative products without permission.
+
+12. TERMINATION
+
+Violation of this license may result in termination of any granted permissions related to Albion OS.
+
+13. FUTURE VERSIONS
+
+Albion Corporation reserves the right to:
+
+- Update this license.
+- Release new versions.
+- Discontinue versions.
+- Change features and functionality.
+
+14. ACCEPTANCE
+
+Using Albion OS indicates acceptance of this license agreement.
+
+If you do not agree with these terms, do not use Albion OS.
+
+15. FINAL STATEMENT
+
+Albion OS is an independent software project created under Albion Corporation.
+
+Please report bugs.
+Please report crashes.
+Please respect the work of contributors and creators.
+
+Thank you for using Albion OS.
+
+Albion Corporation © 2026
+
+END OF LICENSE
