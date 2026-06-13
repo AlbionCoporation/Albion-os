@@ -1,0 +1,368 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Albion OS 4.0 ULTIMATE MAX</title>
+
+<style>
+body{margin:0;font-family:sans-serif;overflow:hidden;}
+
+/* BOOT */
+#boot{
+position:fixed;width:100%;height:100%;
+background:black;color:#00ffcc;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+z-index:999;
+}
+
+/* DESKTOP */
+#desktop{
+display:none;height:100vh;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:white;
+}
+
+/* ICONS */
+.icon{width:80px;text-align:center;margin:10px;display:inline-block;cursor:pointer;}
+.icon div{
+width:60px;height:60px;border-radius:15px;margin:auto;
+display:flex;align-items:center;justify-content:center;
+font-size:28px;
+}
+
+.note{background:linear-gradient(45deg,#38bdf8,#0284c7);}
+.calc{background:linear-gradient(45deg,#facc15,#eab308);}
+.game{background:linear-gradient(45deg,#f43f5e,#be123c);}
+.paint{background:linear-gradient(45deg,#a78bfa,#7c3aed);}
+.set{background:linear-gradient(45deg,#10b981,#047857);}
+.browser{background:linear-gradient(45deg,#f97316,#ea580c);}
+
+/* WINDOWS */
+.window{
+position:absolute;background:#1e293b;
+border-radius:10px;padding:10px;
+display:none;top:100px;left:100px;width:270px;
+touch-action:none;
+}
+
+/* TASKBAR */
+.taskbar{
+position:fixed;bottom:0;width:100%;
+background:#111;display:flex;
+justify-content:space-between;padding:8px;
+}
+
+/* GAME */
+.cell{
+width:60px;height:60px;background:#334155;
+display:inline-flex;align-items:center;
+justify-content:center;margin:2px;
+font-size:24px;
+}
+
+/* PAINT */
+#canvas{background:white;touch-action:none;}
+
+/* FILES */
+#files{
+width:300px;
+height:300px;
+overflow:auto;
+}
+
+/* START MENU */
+#startMenu{
+position:fixed;
+bottom:40px;
+left:10px;
+width:200px;
+background:#0f172a;
+border:1px solid #334155;
+display:none;
+flex-direction:column;
+padding:8px;
+border-radius:10px;
+z-index:9999;
+}
+#startMenu div{
+padding:6px;
+cursor:pointer;
+}
+#startMenu div:hover{
+background:#1e293b;
+}
+
+/* LICENSES */
+#licenses{
+width:320px;
+height:300px;
+overflow:auto;
+background:#0f172a;
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BOOT -->
+<div id="boot">
+<h1>ALBION OS 4.0 ULTIMATE</h1>
+<p>Loading ULTRA MAX...</p>
+</div>
+
+<div id="desktop">
+
+<!-- ICONS -->
+<div class="icon" onclick="openWin('note')"><div class="note">📝</div>Note</div>
+<div class="icon" onclick="openWin('calc')"><div class="calc">🧮</div>Calc</div>
+<div class="icon" onclick="openWin('game')"><div class="game">❌</div>Game</div>
+<div class="icon" onclick="openWin('paintApp')"><div class="paint">🎨</div>Paint</div>
+<div class="icon" onclick="openWin('browser')"><div class="browser">🦆</div>Browser</div>
+<div class="icon" onclick="openWin('settings')"><div class="set">⚙️</div>Settings</div>
+<div class="icon" onclick="openWin('files')"><div class="set">📁</div>Files</div>
+
+<!-- NOTEPAD -->
+<div id="note" class="window">
+<button onclick="closeWin('note')">X</button><br>
+<textarea id="noteText" style="width:100%;height:120px;"></textarea>
+<button onclick="saveNote()">Save</button>
+</div>
+
+<!-- CALC -->
+<div id="calc" class="window">
+<button onclick="closeWin('calc')">X</button><br>
+<input id="display" style="width:100%"><br>
+
+<button onclick="add('7')">7</button>
+<button onclick="add('8')">8</button>
+<button onclick="add('9')">9</button>
+<button onclick="add('+')">+</button><br>
+
+<button onclick="add('4')">4</button>
+<button onclick="add('5')">5</button>
+<button onclick="add('6')">6</button>
+<button onclick="add('-')">-</button><br>
+
+<button onclick="add('1')">1</button>
+<button onclick="add('2')">2</button>
+<button onclick="add('3')">3</button>
+<button onclick="add('*')">*</button><br>
+
+<button onclick="add('0')">0</button>
+<button onclick="calc()">=</button>
+<button onclick="clr()">C</button>
+<button onclick="add('/')">/</button>
+</div>
+
+<!-- GAME -->
+<div id="game" class="window">
+<button onclick="closeWin('game')">X</button>
+<button onclick="resetGame()">Reset</button><br>
+<div id="grid"></div>
+</div>
+
+<!-- PAINT -->
+<div id="paintApp" class="window">
+<button onclick="closeWin('paintApp')">X</button><br>
+<canvas id="canvas" width="230" height="150"></canvas><br>
+<input type="color" id="colorPicker">
+<button onclick="clearCanvas()">Clear</button>
+</div>
+
+<!-- BROWSER -->
+<div id="browser" class="window">
+<button onclick="closeWin('browser')">X</button><br>
+<input id="url" placeholder="Search..." style="width:60%">
+<button onclick="go()">Go</button>
+<iframe id="frame" style="width:100%;height:200px;border:none;"></iframe>
+</div>
+
+<!-- SETTINGS -->
+<div id="settings" class="window">
+<button onclick="closeWin('settings')">X</button><br>
+<button onclick="bg1()">Dark</button>
+<button onclick="bg2()">Blue</button>
+<button onclick="bg3()">Sunset</button>
+<button onclick="openWin('licenses')">Licenses</button>
+</div>
+
+<!-- LICENSES -->
+<div id="licenses" class="window">
+<button onclick="closeWin('licenses')">X</button><br>
+<h3>Albion OS Licenses</h3>
+<p>
+Albion Corporation copyright ©<br><br>
+Do not disturb in any way.<br><br>
+All versions are from Albion Corporation.<br><br>
+Do not deploy it on any other space.<br><br>
+Do not edit this OS.<br><br>
+The OS is not Open Source.
+</p>
+</div>
+
+<!-- FILE MANAGER -->
+<div id="files" class="window">
+<button onclick="closeWin('files')">X</button><br>
+
+<input id="fileName" placeholder="File name"><br>
+<textarea id="fileContent" style="width:100%;height:80px;"></textarea>
+
+<button onclick="saveFile()">Save File</button>
+
+<hr>
+<div id="fileList"></div>
+</div>
+
+<!-- START MENU -->
+<div id="startMenu">
+<h4>⚓ Albion OS</h4>
+<div onclick="openWin('note')">📝 Note</div>
+<div onclick="openWin('calc')">🧮 Calculator</div>
+<div onclick="openWin('game')">❌ Game</div>
+<div onclick="openWin('paintApp')">🎨 Paint</div>
+<div onclick="openWin('browser')">🦆 Browser</div>
+<div onclick="openWin('files')">📁 File Manager</div>
+<div onclick="openWin('settings')">⚙️ Settings</div>
+</div>
+
+<div class="taskbar">
+<span onclick="toggleStart()" style="cursor:pointer;">⚓ Albion OS</span>
+<span id="clock"></span>
+</div>
+
+</div>
+
+<script>
+
+/* BOOT */
+setTimeout(()=>{
+boot.style.display="none";
+desktop.style.display="block";
+},2000);
+
+/* CLOCK */
+setInterval(()=>{clock.innerText=new Date().toLocaleTimeString();},1000);
+
+/* START MENU */
+function toggleStart(){
+let m=document.getElementById("startMenu");
+m.style.display=(m.style.display==="flex")?"none":"flex";
+}
+
+/* WINDOWS */
+function openWin(id){document.getElementById(id).style.display="block";}
+function closeWin(id){document.getElementById(id).style.display="none";}
+
+/* NOTEPAD */
+noteText.value=localStorage.getItem("note")||"";
+function saveNote(){localStorage.setItem("note",noteText.value);}
+
+/* CALC */
+function add(v){display.value+=v;}
+function clr(){display.value="";}
+function calc(){try{display.value=eval(display.value);}catch{display.value="ERR";}}
+
+/* TIC TAC TOE */
+let board=["","","","","","","","",""];
+let turn="X";
+
+function draw(){
+grid.innerHTML="";
+board.forEach((c,i)=>{
+let d=document.createElement("div");
+d.className="cell";
+d.innerText=c;
+d.onclick=()=>move(i);
+grid.appendChild(d);
+});
+checkWin();
+}
+
+function move(i){
+if(board[i]!="")return;
+board[i]=turn;
+turn=(turn=="X")?"O":"X";
+draw();
+}
+
+function checkWin(){
+let win=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+for(let w of win){
+let [a,b,c]=w;
+if(board[a]&&board[a]==board[b]&&board[a]==board[c]){
+alert(board[a]+" WINS!");
+resetGame();
+}
+}
+}
+
+function resetGame(){
+board=["","","","","","","","",""];
+turn="X";
+draw();
+}
+draw();
+
+/* PAINT */
+let ctx=canvas.getContext("2d"),drawing=false;
+canvas.onmousedown=()=>drawing=true;
+canvas.onmouseup=()=>drawing=false;
+canvas.onmousemove=e=>{
+if(drawing){
+ctx.fillStyle=colorPicker.value;
+ctx.fillRect(e.offsetX,e.offsetY,4,4);
+}
+};
+function clearCanvas(){ctx.clearRect(0,0,canvas.width,canvas.height);}
+
+/* BROWSER */
+function go(){
+let q=url.value;
+let u=q.startsWith("http")?q:"https://duckduckgo.com/?q="+encodeURIComponent(q);
+frame.src=u;
+}
+
+/* FILE MANAGER + TXT SUPPORT */
+let files=JSON.parse(localStorage.getItem("albion_files")||"{}");
+
+function saveFile(){
+let name=fileName.value;
+if(!name)return;
+files[name]=fileContent.value;
+localStorage.setItem("albion_files",JSON.stringify(files));
+renderFiles();
+}
+
+function openFile(name){
+let content=files[name]||"";
+if(name.endsWith(".txt")){
+alert("📄 TXT FILE:\n\n"+content);
+}else{
+alert("File not supported preview.");
+}
+fileName.value=name;
+fileContent.value=content;
+}
+
+function renderFiles(){
+fileList.innerHTML="";
+for(let f in files){
+let d=document.createElement("div");
+d.innerHTML="📄 "+f;
+d.onclick=()=>openFile(f);
+fileList.appendChild(d);
+}
+}
+renderFiles();
+
+/* SETTINGS */
+function bg1(){desktop.style.background="linear-gradient(135deg,#0f172a,#1e293b)";}
+function bg2(){desktop.style.background="linear-gradient(135deg,#1e3a8a,#38bdf8)";}
+function bg3(){desktop.style.background="linear-gradient(135deg,#f97316,#ef4444)";}
+</script>
+
+</body>
+</html>
